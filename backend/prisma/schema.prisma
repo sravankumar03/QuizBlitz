@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  name      String?
+  quizzes   Quiz[]    @relation("UserQuizzes")
+  sessions  Session[] @relation("UserSessions")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Quiz {
+  id          String     @id @default(uuid())
+  title       String
+  topic       String
+  difficulty  String
+  createdById String?
+  createdBy   User?      @relation("UserQuizzes", fields: [createdById], references: [id])
+  questions   Question[]
+  sessions    Session[]
+  createdAt   DateTime   @default(now())
+}
+
+model Question {
+  id        String   @id @default(uuid())
+  prompt    String
+  order     Int
+  quizId    String
+  quiz      Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  options   Option[]
+  answers   ParticipantAnswer[]
+  createdAt DateTime @default(now())
+}
+
+model Option {
+  id          String   @id @default(uuid())
+  text        String
+  isCorrect   Boolean  @default(false)
+  questionId  String
+  question    Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  answers     ParticipantAnswer[]
+}
+
+model Session {
+  id             String               @id @default(uuid())
+  sessionCode    String               @unique
+  quizId         String
+  quiz           Quiz                 @relation(fields: [quizId], references: [id])
+  hostId         String?
+  host           User?                @relation("UserSessions", fields: [hostId], references: [id])
+  isActive       Boolean              @default(true)
+  currentQuestion Int? 
+  participants   SessionParticipant[]
+  answers        ParticipantAnswer[]
+  createdAt      DateTime             @default(now())
+  endedAt        DateTime?
+}
+
+model SessionParticipant {
+  id         String   @id @default(uuid())
+  sessionId  String
+  session    Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  name       String
+  score      Int      @default(0)
+  joinedAt   DateTime @default(now())
+  answers    ParticipantAnswer[]
+}
+
+model ParticipantAnswer {
+  id            String   @id @default(uuid())
+  sessionId     String
+  session       Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  participantId String
+  participant   SessionParticipant @relation(fields: [participantId], references: [id], onDelete: Cascade)
+  questionId    String
+  question      Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  optionId      String
+  option        Option   @relation(fields: [optionId], references: [id])
+  isCorrect     Boolean
+  createdAt     DateTime @default(now())
+
+  @@unique([sessionId, participantId, questionId], map: "sessionId_participantId_questionId")
+}
+

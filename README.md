@@ -181,22 +181,14 @@ Popular models:
 
 ## ✅ Recent Updates
 
-- [x] ~~Add quiz timer feature~~ - Timer with automatic answer reveal
+- [x] Timer with automatic answer reveal
 - [x] Manual quiz creation editor
 - [x] Quiz deletion functionality
 - [x] End-game summary with podium and full standings
 - [x] Player avatars in leaderboard
 - [x] Leaderboard deduplication (prevents duplicate entries)
 
-## 🧪 Testing & Future Work
 
-- [ ] Add unit tests (Vitest/Jest) for services and components
-- [ ] Add authentication for educators
-- [ ] Rate limiting and security hardening
-- [ ] Deploy backend (Render/Railway) + frontend (Vercel)
-- [ ] Support for image-based questions
-- [ ] Quiz export/import functionality
-- [ ] Team mode with group scoring
 
 ## 📄 License
 

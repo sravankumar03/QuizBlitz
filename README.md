@@ -4,6 +4,9 @@ A Kahoot-style quiz platform powered by AI (via OpenRouter), Socket.IO, and Post
 
 ![Quiz Builder Demo](login.PNG)
 ![Quiz Builder Demo](host.PNG)
+![Quiz Builder Demo](live.PNG)
+![Quiz Builder Demo](manual.PNG)
+
 
 ## ✨ Features
 

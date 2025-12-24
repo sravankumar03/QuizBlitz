@@ -2,7 +2,8 @@
 
 A Kahoot-style quiz platform powered by AI (via OpenRouter), Socket.IO, and PostgreSQL/Prisma. Educators can generate quizzes using AI or create them manually, host live sessions, and participants join via a code to answer questions in real time.
 
-![Quiz Builder Demo](login.PNG,host.PNG)
+![Quiz Builder Demo](login.PNG)
+![Quiz Builder Demo](host.PNG)
 
 ## ✨ Features
 
